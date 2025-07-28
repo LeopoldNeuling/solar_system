@@ -25,14 +25,14 @@ export default function App() {
 			<ambientLight intensity={0.5} />
 			<BackgroundTexture bgType={"simple"} />
 
-			{/* <Mercury /> */}
-			{/* <Venus /> */}
-			<Earth tilTAngleDeg={23.5} />
-			{/* <Mars /> */}
-			{/* <Jupiter /> */}
-			{/* <Saturn /> */}
-			{/* <Uranus /> */}
-			{/* <Neptune /> */}
+			{/* <Mercury tilTAngleDeg={0.03} /> */}
+			{/* <Venus tilTAngleDeg={177.4} /> */}
+			{/* <Earth tilTAngleDeg={23.5} /> */}
+			{/* <Mars tilTAngleDeg={25.19}/> */}
+			{/* <Jupiter tilTAngleDeg={3.13} /> */}
+			{/* <Saturn tilTAngleDeg={26.73} /> */}
+			<Uranus tilTAngleDeg={97.77} />
+			{/* <Neptune tilTAngleDeg={28.32} /> */}
 		</Canvas>
 	);
 }

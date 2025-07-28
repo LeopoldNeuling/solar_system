@@ -43,7 +43,11 @@ export function PlanetSkeleton({
 		alpha: ringAlphaMapPath,
 	};
 
-	const axisTilt = new Vector3(0, MathUtils.degToRad(23.5), 0).normalize();
+	const axisTilt = new Vector3(
+		0,
+		MathUtils.degToRad(tilTAngleDeg),
+		0
+	).normalize();
 
 	const meshRef = useRef();
 
@@ -58,7 +62,7 @@ export function PlanetSkeleton({
 		<group
 			ref={meshRef}
 			position={pos}
-			rotation={[0, 0.5, MathUtils.degToRad(23.5)]}
+			rotation={[0, 0.5, MathUtils.degToRad(tilTAngleDeg)]}
 		>
 			<PlanetConstructor
 				textures={planetTextures}
@@ -123,7 +127,9 @@ function RingConstructor({ parentRadius, textures, orientation }) {
 	return (
 		<mesh
 			geometry={geometry}
-			rotation={[orientation === "horizontal" ? _90degInRad : 0, 0, 0]}
+			rotation={
+				orientation === "horizontal" ? [_90degInRad, 0, 0] : [_90degInRad, 0, 0]
+			}
 		>
 			<meshStandardMaterial
 				map={colorMap}
