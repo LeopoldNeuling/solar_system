@@ -22,10 +22,17 @@ import "./style.css";
 export default function App() {
 	return (
 		<Canvas camera={{ position: [0, 0, 0] }}>
-			<ambientLight intensity={2} />
+			<ambientLight intensity={0.5} />
 			<BackgroundTexture bgType={"simple"} />
 
-			<Saturn />
+			{/* <Mercury /> */}
+			{/* <Venus /> */}
+			<Earth tilTAngleDeg={23.5} />
+			{/* <Mars /> */}
+			{/* <Jupiter /> */}
+			{/* <Saturn /> */}
+			{/* <Uranus /> */}
+			{/* <Neptune /> */}
 		</Canvas>
 	);
 }

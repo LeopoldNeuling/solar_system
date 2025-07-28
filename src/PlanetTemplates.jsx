@@ -1,0 +1,136 @@
+/**
+ * @imports
+ */
+//react
+import { useRef } from "react";
+//three.js
+import { useTexture } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
+import {
+	RingGeometry,
+	Vector3,
+	DoubleSide,
+	MathUtils,
+	Quaternion,
+} from "three";
+//components
+import { sphereSegments, unsetPosZ } from "./Planets";
+
+export function PlanetSkeleton({
+	//group
+	pos = [0, 0, unsetPosZ],
+	radius = 5,
+	tilTAngleDeg = 0,
+	//planet
+	colorMapPath,
+	bumpMapPath,
+	specularMapPath,
+	normalMapPath,
+	displacementScale = 0,
+	//rings
+	ringColorMapPath,
+	ringAlphaMapPath,
+	ringOrientation = "horizontal",
+}) {
+	const planetTextures = {
+		color: colorMapPath,
+		bump: bumpMapPath,
+		specular: specularMapPath,
+		normal: normalMapPath,
+	};
+	const ringTextures = {
+		color: ringColorMapPath,
+		alpha: ringAlphaMapPath,
+	};
+
+	const axisTilt = new Vector3(0, MathUtils.degToRad(23.5), 0).normalize();
+
+	const meshRef = useRef();
+
+	useFrame((_, delta) => {
+		const angle = 0.1; // radians per frame
+		const q = new Quaternion();
+		q.setFromAxisAngle(axisTilt, angle);
+		meshRef.current.quaternion.multiply(q); // apply rotation
+	});
+
+	return (
+		<group
+			ref={meshRef}
+			position={pos}
+			rotation={[0, 0.5, MathUtils.degToRad(23.5)]}
+		>
+			<PlanetConstructor
+				textures={planetTextures}
+				radius={radius}
+				displacementScale={displacementScale}
+			/>
+			{ringColorMapPath && (
+				<RingConstructor
+					parentRadius={radius}
+					textures={ringTextures}
+					orientation={ringOrientation}
+				/>
+			)}
+		</group>
+	);
+}
+
+function PlanetConstructor({ textures, radius, displacementScale }) {
+	const colorMap = textures["color"] ? useTexture(textures["color"]) : undefined;
+	const bumpMap = textures["bump"] ? useTexture(textures["bump"]) : undefined;
+	const specularMap = textures["specular"]
+		? useTexture(textures["specular"])
+		: undefined;
+	const normalMap = textures["normal"]
+		? useTexture(textures["normal"])
+		: undefined;
+
+	return (
+		<mesh>
+			<sphereGeometry args={[radius, ...sphereSegments]} />
+			<meshPhongMaterial
+				map={colorMap}
+				bumpMap={bumpMap}
+				specularMap={specularMap}
+				normalMap={normalMap}
+				displacementMap={bumpMap}
+				displacementScale={displacementScale}
+			/>
+		</mesh>
+	);
+}
+
+function RingConstructor({ parentRadius, textures, orientation }) {
+	const _90degInRad = Math.PI / 2;
+
+	const colorMap = useTexture(textures["color"]);
+	const alphaMap = useTexture(textures["alpha"]);
+
+	const innerR = parentRadius * 1.2;
+	const outerR = parentRadius * 1.5;
+
+	const geometry = new RingGeometry(innerR, outerR, 64);
+	const threshold = (innerR + outerR) / 2;
+
+	var pos = geometry.attributes.position;
+	var v3 = new Vector3();
+	for (let i = 0; i < pos.count; i++) {
+		v3.fromBufferAttribute(pos, i);
+		geometry.attributes.uv.setXY(i, v3.length() < threshold ? 0 : 1, 1);
+	}
+
+	return (
+		<mesh
+			geometry={geometry}
+			rotation={[orientation === "horizontal" ? _90degInRad : 0, 0, 0]}
+		>
+			<meshStandardMaterial
+				map={colorMap}
+				side={DoubleSide}
+				transparent={true}
+				alphaMap={alphaMap}
+			/>
+		</mesh>
+	);
+}

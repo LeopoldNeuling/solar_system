@@ -1,82 +1,37 @@
-/**
- * @imports
- */
-//react
-import { useRef } from "react";
-//three.js
-import { useTexture } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { PlanetSkeleton } from "./PlanetTemplates";
 
-const __sphereSegments = [64, 64];
 const __displacementScale = 0.25;
-const __unsetPosZ = -10;
+export const sphereSegments = [64, 64];
+export const unsetPosZ = -20;
 
-function PlanetSkeleton({
-	pos,
-	radius,
-	colorMapPath,
-	bumpMapPath,
-	specularMapPath,
-	normalMapPath,
-	displacementScale = 0,
-
-	ringColorMapPath,
-	ringColorOrientation = "horizontal", // 'horizontal' or 'vertical'
-}) {
-	const colorMap = colorMapPath ? useTexture(colorMapPath) : undefined;
-	const bumpMap = bumpMapPath ? useTexture(bumpMapPath) : undefined;
-	const specularMap = specularMapPath ? useTexture(specularMapPath) : undefined;
-	const normalMap = normalMapPath ? useTexture(normalMapPath) : undefined;
-
-	const ringColorMap = ringColorMapPath
-		? useTexture(ringColorMapPath)
-		: undefined;
-
-	const meshRef = useRef();
-	useFrame((_, delta) => (meshRef.current.rotation.y += 0.5 * delta));
-
-	return (
-		<>
-			<mesh ref={meshRef} position={pos}>
-				<sphereGeometry args={[radius, ...__sphereSegments]} />
-				<meshPhongMaterial
-					map={colorMap}
-					bumpMap={bumpMap}
-					specularMap={specularMap}
-					normalMap={normalMap}
-					displacementMap={bumpMap}
-					displacementScale={displacementScale}
-				/>
-			</mesh>
-		</>
-	);
-}
-
-export function Mercury({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Mercury({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./mercury/colorMap.jpg"}
 			bumpMapPath={"./mercury/bumpMap.jpg"}
 		/>
 	);
 }
-export function Venus({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Venus({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./venus/colorMap.jpg"}
 			bumpMapPath={"./venus/bumpMap.jpg"}
 		/>
 	);
 }
-export function Earth({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Earth({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./earth/colorMap.jpg"}
 			bumpMapPath={"./earth/bumpMap.jpg"}
 			specularMapPath={"./earth/specularMap.jpg"}
@@ -85,11 +40,12 @@ export function Earth({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
 		/>
 	);
 }
-export function Mars({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Mars({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./mars/colorMap.jpg"}
 			bumpMapPath={"./mars/bumpMap.jpg"}
 			normalMapPath={"./mars/normalMap.jpg"}
@@ -97,38 +53,48 @@ export function Mars({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
 		/>
 	);
 }
-export function Jupiter({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Jupiter({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./jupiter/colorMap.jpg"}
 		/>
 	);
 }
-export function Saturn({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Saturn({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			colorMapPath={"./saturn/colorMap.jpg"}
+			tilTAngleDeg={tilTAngleDeg}
+			colorMapPath="./saturn/colorMap.jpg"
+			ringColorMapPath="./saturn/ringColorMap.jpg"
+			ringAlphaMapPath="./saturn/ringAlphaMap.gif"
+			ringOrientation="horizontal"
 		/>
 	);
 }
-export function Uranus({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Uranus({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./uranus/colorMap.jpg"}
+			ringColorMapPath={"./uranus/ringColorMap.jpg"}
+			ringAlphaMapPath={"./uranus/ringAlphaMap.gif"}
+			ringOrientation="vertical"
 		/>
 	);
 }
-export function Neptune({ pos = [0, 0, __unsetPosZ], radius = 5 }) {
+export function Neptune({ pos, radius, tilTAngleDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
+			tilTAngleDeg={tilTAngleDeg}
 			colorMapPath={"./neptune/colorMap.jpg"}
 		/>
 	);
