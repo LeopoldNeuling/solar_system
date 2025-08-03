@@ -1,8 +1,5 @@
 import { PlanetSkeleton } from "./PlanetTemplates";
-
-const __displacementScale = 0.25;
-export const sphereSegments = [64, 64];
-export const unsetPosZ = -20;
+import { __displacementScale } from "./App";
 
 export function Mercury({ pos, radius, tilTAngleDeg }) {
 	return (

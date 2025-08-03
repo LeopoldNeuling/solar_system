@@ -14,7 +14,7 @@ import {
 	Quaternion,
 } from "three";
 //components
-import { sphereSegments, unsetPosZ } from "./Planets";
+import { sphereSegments, unsetPosZ } from "./App";
 
 export function PlanetSkeleton({
 	//group
@@ -100,6 +100,8 @@ function PlanetConstructor({ textures, radius, displacementScale }) {
 				normalMap={normalMap}
 				displacementMap={bumpMap}
 				displacementScale={displacementScale}
+				emissive={0xffffff}
+				emissiveIntensity={0.01}
 			/>
 		</mesh>
 	);
