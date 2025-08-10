@@ -2,7 +2,7 @@
  * @imports
  */
 //react
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 //three.js
 import { useTexture } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
@@ -16,7 +16,7 @@ import {
 	Saturn,
 	Uranus,
 	Venus,
-} from "./Planets";
+} from "./PlanetDefinitions";
 import CameraMover from "./Camera";
 import "./style.css";
 
@@ -24,7 +24,7 @@ export const __displacementScale = 0.25;
 export const sphereSegments = [64, 64];
 export const unsetPosZ = -100;
 
-const earthRadius = 2;
+const earthRadius = 4;
 const radiiRatioToEarth = {
 	mercury: earthRadius * 0.383,
 	venus: earthRadius * 0.949,
@@ -34,63 +34,46 @@ const radiiRatioToEarth = {
 	uranus: earthRadius * 3.98,
 	neptune: earthRadius * 3.81,
 };
+const planets = [
+	<Mercury tilTAngleDeg={0.03} radius={radiiRatioToEarth.mercury} />,
+	<Venus tilTAngleDeg={177.4} radius={radiiRatioToEarth.venus} />,
+	<Earth tilTAngleDeg={23.5} radius={earthRadius} />,
+	<Mars tilTAngleDeg={25.19} radius={radiiRatioToEarth.mars} />,
+	<Jupiter tilTAngleDeg={3.13} radius={radiiRatioToEarth.jupiter} />,
+	<Saturn tilTAngleDeg={26.73} radius={radiiRatioToEarth.saturn} />,
+	<Uranus tilTAngleDeg={97.77} radius={radiiRatioToEarth.uranus} />,
+	<Neptune tilTAngleDeg={28.32} radius={radiiRatioToEarth.neptune} />,
+];
 
 export default function App() {
-	return (
-		<Canvas camera={{ position: [0, 0, 0] }}>
-			<CameraMover />
-			<ambientLight intensity={0.5} />
-			<BackgroundTexture bgType={"simple"} />
+	function handleKeyDown(e) {
+		if (e.key === "Enter")
+			setPlanetPointer((prev) => (prev + 1) % Object.keys(planets).length);
+	}
+	useEffect(() => {
+		window.addEventListener("keydown", handleKeyDown);
+		alert('Press "Enter" to change the planet');
 
-			<Mercury
-				tilTAngleDeg={0.03}
-				pos={[-25, 0, -distanceToSun.mercury * distMultiplier]}
-				radius={radiiRatioToEarth.mercury}
-			/>
-			<Venus
-				tilTAngleDeg={177.4}
-				pos={[-20, 0, -distanceToSun.venus * distMultiplier]}
-				radius={radiiRatioToEarth.venus}
-			/>
-			<Earth
-				tilTAngleDeg={23.5}
-				pos={[-10, 0, -distanceToSun.earth * distMultiplier]}
-				radius={earthRadius}
-			/>
-			<Mars
-				tilTAngleDeg={25.19}
-				pos={[0, 0, -distanceToSun.mars * distMultiplier]}
-				radius={radiiRatioToEarth.mars}
-			/>
-			<Jupiter
-				tilTAngleDeg={3.13}
-				pos={[10, 0, -distanceToSun.jupiter * distMultiplier]}
-				radius={radiiRatioToEarth.jupiter}
-			/>
-			<Saturn
-				tilTAngleDeg={26.73}
-				pos={[20, 0, -distanceToSun.saturn * distMultiplier]}
-				radius={radiiRatioToEarth.saturn}
-			/>
-			<Uranus
-				tilTAngleDeg={97.77}
-				pos={[30, 0, -distanceToSun.uranus * distMultiplier]}
-				radius={radiiRatioToEarth.uranus}
-			/>
-			<Neptune
-				tilTAngleDeg={28.32}
-				pos={[40, 0, -distanceToSun.neptune * distMultiplier]}
-				radius={radiiRatioToEarth.neptune}
-			/>
-		</Canvas>
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, []);
+
+	const [planetPointer, setPlanetPointer] = useState(0);
+	return (
+		<>
+			<Canvas camera={{ position: [0, 0, 0] }}>
+				<CameraMover />
+				<ambientLight intensity={0.5} />
+				<BackgroundTexture />
+
+				{planets[planetPointer]}
+			</Canvas>
+		</>
 	);
 }
 
-function BackgroundTexture({ bgType }) {
+function BackgroundTexture() {
 	const { scene } = useThree();
-	const texture = useTexture(
-		`./universe/${bgType === "simple" ? "starts" : "milkyway"}.jpg`
-	);
+	const texture = useTexture("stars.jpg");
 
 	useEffect(() => {
 		scene.background = texture;

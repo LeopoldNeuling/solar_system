@@ -17,7 +17,7 @@ import {
 import { sphereSegments, unsetPosZ } from "./App";
 
 export function PlanetSkeleton({
-	//group
+	//group (planet + ring)
 	pos = [0, 0, unsetPosZ],
 	radius = 5,
 	tilTAngleDeg = 0,
@@ -27,7 +27,7 @@ export function PlanetSkeleton({
 	specularMapPath,
 	normalMapPath,
 	displacementScale = 0,
-	//rings
+	//ring
 	ringColorMapPath,
 	ringAlphaMapPath,
 	ringOrientation = "horizontal",
@@ -52,7 +52,7 @@ export function PlanetSkeleton({
 	const meshRef = useRef();
 
 	useFrame((_, delta) => {
-		const angle = 0.1; // radians per frame
+		const angle = 0.01; // radians per frame
 		const q = new Quaternion();
 		q.setFromAxisAngle(axisTilt, angle);
 		meshRef.current.quaternion.multiply(q); // apply rotation
