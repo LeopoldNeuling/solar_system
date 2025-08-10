@@ -81,14 +81,11 @@ export function PlanetSkeleton({
 }
 
 function PlanetConstructor({ textures, radius, displacementScale }) {
-	const colorMap = textures["color"] ? useTexture(textures["color"]) : undefined;
-	const bumpMap = textures["bump"] ? useTexture(textures["bump"]) : undefined;
-	const specularMap = textures["specular"]
-		? useTexture(textures["specular"])
-		: undefined;
-	const normalMap = textures["normal"]
-		? useTexture(textures["normal"])
-		: undefined;
+	const { color, bump, specular, normal } = textures;
+	const colorMap = color ? useTexture(color) : undefined;
+	const bumpMap = bump ? useTexture(bump) : undefined;
+	const specularMap = specular ? useTexture(specular) : undefined;
+	const normalMap = normal ? useTexture(normal) : undefined;
 
 	return (
 		<mesh>
