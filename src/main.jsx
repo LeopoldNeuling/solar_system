@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 //components
 import App from "./App.jsx";
+import { AnimationProvider } from "./AnimationProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
 	<ThemeProvider
@@ -15,6 +16,8 @@ createRoot(document.getElementById("root")).render(
 		})}
 	>
 		<CssBaseline />
-		<App />
+		<AnimationProvider>
+			<App />
+		</AnimationProvider>
 	</ThemeProvider>
 );

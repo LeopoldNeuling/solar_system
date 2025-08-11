@@ -1,5 +1,5 @@
 //react
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 //three.js
 import { useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
@@ -12,6 +12,7 @@ import {
 } from "three";
 //components
 import { sphereSegments, unsetPosZ } from "../App";
+import { AnimationContext } from "../AnimationProvider";
 
 export function PlanetSkeleton({
 	//group (planet + ring)
@@ -47,9 +48,22 @@ export function PlanetSkeleton({
 	).normalize();
 
 	const meshRef = useRef();
+	const { rotateLeft, rotateRight, userTouch, setUserTouch } =
+		useContext(AnimationContext);
 
-	useFrame((_, delta) => {
-		const angle = 0.01; // radians per frame
+	let angle; // radians per frame
+	const animationMultiplier = 5;
+
+	useFrame(() => {
+		angle = 0.01;
+		if (rotateLeft) {
+			angle *= -animationMultiplier;
+			setUserTouch(true);
+		} else if (rotateRight) {
+			angle *= animationMultiplier;
+			setUserTouch(true);
+		}
+		if (userTouch && !rotateLeft && !rotateRight) return;
 		const q = new Quaternion();
 		q.setFromAxisAngle(axisTilt, angle);
 		meshRef.current.quaternion.multiply(q); // apply rotation

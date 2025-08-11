@@ -1,5 +1,5 @@
 //react
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 //three.js
 import { useTexture } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
@@ -16,6 +16,7 @@ import {
 } from "./planets/PlanetDefinitions";
 import UserController from "./userInteract/UserController";
 import { UserInfoDialog } from "./userInteract/userInfoDialog";
+import { AnimationContext } from "./AnimationProvider";
 import "./style.css";
 
 export const __displacementScale = 0.25;
@@ -69,8 +70,11 @@ const planets = [
 ];
 
 export default function App() {
+	const { setUserTouch } = useContext(AnimationContext);
+
 	const handleControllerSkip = () => {
 		setPlanetPointer((prev) => (prev + 1) % Object.keys(planets).length);
+		setUserTouch(false);
 	};
 
 	const [planetPointer, setPlanetPointer] = useState(0);

@@ -4,3 +4,23 @@ body,
 	height: 100%;
 	margin: unset;
 }
+
+.controls {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1vh;
+}
+
+.controls > span {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.controls > span > i {
+	font-size: 0.7rem;
+}
+
+.divider {
+	grid-column: span 2;
+}
