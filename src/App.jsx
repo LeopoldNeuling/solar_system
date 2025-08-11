@@ -17,7 +17,7 @@ import {
 	Uranus,
 	Venus,
 } from "./PlanetDefinitions";
-import CameraMover from "./Camera";
+import UserController from "./UserController";
 import "./style.css";
 
 export const __displacementScale = 0.25;
@@ -25,49 +25,68 @@ export const sphereSegments = [64, 64];
 export const unsetPosZ = -100;
 
 const earthRadius = 4;
-const radiiRatioToEarth = {
-	mercury: earthRadius * 0.383,
-	venus: earthRadius * 0.949,
-	mars: earthRadius * 0.532,
-	jupiter: earthRadius * 10.97,
-	saturn: earthRadius * 9.14,
-	uranus: earthRadius * 3.98,
-	neptune: earthRadius * 3.81,
+const planetData = {
+	mercury: {
+		r: earthRadius * 0.383,
+		tilt: 0.03,
+	},
+	venus: {
+		r: earthRadius * 0.949,
+		tilt: 177.4,
+	},
+	earth: {
+		r: earthRadius,
+		tilt: 23.5,
+	},
+	mars: {
+		r: earthRadius * 0.532,
+		tilt: 25.19,
+	},
+	jupiter: {
+		r: earthRadius * 10.97,
+		tilt: 3.13,
+	},
+	saturn: {
+		r: earthRadius * 9.14,
+		tilt: 26.73,
+	},
+	uranus: {
+		r: earthRadius * 3.98,
+		tilt: 97.77,
+	},
+	neptune: {
+		r: earthRadius * 3.81,
+		tilt: 28.32,
+	},
 };
 const planets = [
-	<Mercury tilTAngleDeg={0.03} radius={radiiRatioToEarth.mercury} />,
-	<Venus tilTAngleDeg={177.4} radius={radiiRatioToEarth.venus} />,
-	<Earth tilTAngleDeg={23.5} radius={earthRadius} />,
-	<Mars tilTAngleDeg={25.19} radius={radiiRatioToEarth.mars} />,
-	<Jupiter tilTAngleDeg={3.13} radius={radiiRatioToEarth.jupiter} />,
-	<Saturn tilTAngleDeg={26.73} radius={radiiRatioToEarth.saturn} />,
-	<Uranus tilTAngleDeg={97.77} radius={radiiRatioToEarth.uranus} />,
-	<Neptune tilTAngleDeg={28.32} radius={radiiRatioToEarth.neptune} />,
+	<Mercury tiltDeg={planetData.mercury.tilt} radius={planetData.mercury.r} />,
+	<Venus tiltDeg={planetData.venus.tilt} radius={planetData.venus.r} />,
+	<Earth tiltDeg={planetData.earth.tilt} radius={earthRadius} />,
+	<Mars tiltDeg={planetData.mars.tilt} radius={planetData.mars.r} />,
+	<Jupiter tiltDeg={planetData.jupiter.tilt} radius={planetData.jupiter.r} />,
+	<Saturn tiltDeg={planetData.saturn.tilt} radius={planetData.saturn.r} />,
+	<Uranus tiltDeg={planetData.uranus.tilt} radius={planetData.uranus.r} />,
+	<Neptune tiltDeg={planetData.neptune.tilt} radius={planetData.neptune.r} />,
 ];
 
 export default function App() {
-	function handleKeyDown(e) {
-		if (e.key === "Enter")
-			setPlanetPointer((prev) => (prev + 1) % Object.keys(planets).length);
-	}
-	useEffect(() => {
-		window.addEventListener("keydown", handleKeyDown);
-		alert('Press "Enter" to change the planet');
-
-		return () => window.removeEventListener("keydown", handleKeyDown);
-	}, []);
+	const handleControllerSkip = () => {
+		setPlanetPointer((prev) => (prev + 1) % Object.keys(planets).length);
+	};
 
 	const [planetPointer, setPlanetPointer] = useState(0);
 	return (
-		<>
-			<Canvas camera={{ position: [0, 0, 0] }}>
-				<CameraMover />
-				<ambientLight intensity={0.5} />
-				<BackgroundTexture />
+		<Canvas camera={{ position: [0, 0, 0] }}>
+			<ambientLight intensity={0.5} />
+			<UserController
+				skipPlanet={handleControllerSkip}
+				planetRadius={Object.values(planetData)[planetPointer].r}
+			/>
 
-				{planets[planetPointer]}
-			</Canvas>
-		</>
+			<BackgroundTexture />
+			{planets[planetPointer]}
+		</Canvas>
 	);
 }
 
@@ -78,6 +97,4 @@ function BackgroundTexture() {
 	useEffect(() => {
 		scene.background = texture;
 	}, [scene, texture]);
-
-	return null;
 }

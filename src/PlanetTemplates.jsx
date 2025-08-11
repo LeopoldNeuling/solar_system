@@ -114,13 +114,13 @@ function RingConstructor({ parentRadius, textures, orientation }) {
 	const outerR = parentRadius * 1.5;
 
 	const geometry = new RingGeometry(innerR, outerR, 64);
-	const threshold = (innerR + outerR) / 2;
 
-	var pos = geometry.attributes.position;
-	var v3 = new Vector3();
+	const threshold = (innerR + outerR) / 2;
+	let pos = geometry.attributes.position;
+	let vectorBuffer = new Vector3();
 	for (let i = 0; i < pos.count; i++) {
-		v3.fromBufferAttribute(pos, i);
-		geometry.attributes.uv.setXY(i, v3.length() < threshold ? 0 : 1, 1);
+		vectorBuffer.fromBufferAttribute(pos, i);
+		geometry.attributes.uv.setXY(i, vectorBuffer.length() < threshold ? 0 : 1, 1);
 	}
 
 	return (

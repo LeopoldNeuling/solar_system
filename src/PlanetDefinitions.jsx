@@ -1,34 +1,34 @@
 import { PlanetSkeleton } from "./PlanetTemplates";
 import { __displacementScale } from "./App";
 
-export function Mercury({ pos, radius, tilTAngleDeg }) {
+export function Mercury({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./mercury/colorMap.jpg"}
 			bumpMapPath={"./mercury/bumpMap.jpg"}
 		/>
 	);
 }
-export function Venus({ pos, radius, tilTAngleDeg }) {
+export function Venus({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./venus/colorMap.jpg"}
 			bumpMapPath={"./venus/bumpMap.jpg"}
 		/>
 	);
 }
-export function Earth({ pos, radius, tilTAngleDeg }) {
+export function Earth({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./earth/colorMap.jpg"}
 			bumpMapPath={"./earth/bumpMap.jpg"}
 			specularMapPath={"./earth/specularMap.jpg"}
@@ -37,12 +37,12 @@ export function Earth({ pos, radius, tilTAngleDeg }) {
 		/>
 	);
 }
-export function Mars({ pos, radius, tilTAngleDeg }) {
+export function Mars({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./mars/colorMap.jpg"}
 			bumpMapPath={"./mars/bumpMap.jpg"}
 			normalMapPath={"./mars/normalMap.jpg"}
@@ -50,22 +50,22 @@ export function Mars({ pos, radius, tilTAngleDeg }) {
 		/>
 	);
 }
-export function Jupiter({ pos, radius, tilTAngleDeg }) {
+export function Jupiter({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./jupiter/colorMap.jpg"}
 		/>
 	);
 }
-export function Saturn({ pos, radius, tilTAngleDeg }) {
+export function Saturn({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath="./saturn/colorMap.jpg"
 			ringColorMapPath="./saturn/ringColorMap.jpg"
 			ringAlphaMapPath="./saturn/ringAlphaMap.gif"
@@ -73,12 +73,12 @@ export function Saturn({ pos, radius, tilTAngleDeg }) {
 		/>
 	);
 }
-export function Uranus({ pos, radius, tilTAngleDeg }) {
+export function Uranus({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./uranus/colorMap.jpg"}
 			ringColorMapPath={"./uranus/ringColorMap.jpg"}
 			ringAlphaMapPath={"./uranus/ringAlphaMap.gif"}
@@ -86,12 +86,12 @@ export function Uranus({ pos, radius, tilTAngleDeg }) {
 		/>
 	);
 }
-export function Neptune({ pos, radius, tilTAngleDeg }) {
+export function Neptune({ pos, radius, tiltDeg }) {
 	return (
 		<PlanetSkeleton
 			pos={pos}
 			radius={radius}
-			tilTAngleDeg={tilTAngleDeg}
+			tilTAngleDeg={tiltDeg}
 			colorMapPath={"./neptune/colorMap.jpg"}
 		/>
 	);
