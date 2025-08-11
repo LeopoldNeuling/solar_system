@@ -1,6 +1,3 @@
-/**
- * @imports
- */
 //react
 import { useRef } from "react";
 //three.js
@@ -14,7 +11,7 @@ import {
 	Quaternion,
 } from "three";
 //components
-import { sphereSegments, unsetPosZ } from "./App";
+import { sphereSegments, unsetPosZ } from "../App";
 
 export function PlanetSkeleton({
 	//group (planet + ring)

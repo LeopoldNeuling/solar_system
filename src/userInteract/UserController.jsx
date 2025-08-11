@@ -1,6 +1,9 @@
-import { useFrame, useThree } from "@react-three/fiber";
+//react
 import { useEffect, useRef } from "react";
-import { unsetPosZ } from "./App";
+//three.js
+import { useFrame, useThree } from "@react-three/fiber";
+//components
+import { unsetPosZ } from "../App";
 
 export default function UserController({ skipPlanet, planetRadius }) {
 	// *** DEFINITIONS *** --------------------------------------------------------------

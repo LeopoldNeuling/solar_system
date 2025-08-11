@@ -1,8 +1,5 @@
-/**
- * @imports
- */
 //react
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 //three.js
 import { useTexture } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
@@ -16,8 +13,9 @@ import {
 	Saturn,
 	Uranus,
 	Venus,
-} from "./PlanetDefinitions";
-import UserController from "./UserController";
+} from "./planets/PlanetDefinitions";
+import UserController from "./userInteract/UserController";
+import { UserInfoDialog } from "./userInteract/userInfoDialog";
 import "./style.css";
 
 export const __displacementScale = 0.25;
@@ -77,16 +75,19 @@ export default function App() {
 
 	const [planetPointer, setPlanetPointer] = useState(0);
 	return (
-		<Canvas camera={{ position: [0, 0, 0] }}>
-			<ambientLight intensity={0.5} />
-			<UserController
-				skipPlanet={handleControllerSkip}
-				planetRadius={Object.values(planetData)[planetPointer].r}
-			/>
+		<>
+			<UserInfo />
+			<Canvas camera={{ position: [0, 0, 0] }}>
+				<ambientLight intensity={0.5} />
+				<UserController
+					skipPlanet={handleControllerSkip}
+					planetRadius={Object.values(planetData)[planetPointer].r}
+				/>
 
-			<BackgroundTexture />
-			{planets[planetPointer]}
-		</Canvas>
+				<BackgroundTexture />
+				{planets[planetPointer]}
+			</Canvas>
+		</>
 	);
 }
 
@@ -97,4 +98,12 @@ function BackgroundTexture() {
 	useEffect(() => {
 		scene.background = texture;
 	}, [scene, texture]);
+}
+
+function UserInfo() {
+	const dialogRef = useRef();
+	useEffect(() => {
+		dialogRef.current.openDialog();
+	}, []);
+	return <UserInfoDialog ref={dialogRef} />;
 }

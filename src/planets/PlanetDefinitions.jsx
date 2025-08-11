@@ -1,5 +1,6 @@
+//components
 import { PlanetSkeleton } from "./PlanetTemplates";
-import { __displacementScale } from "./App";
+import { __displacementScale } from "../App";
 
 export function Mercury({ pos, radius, tiltDeg }) {
 	return (
