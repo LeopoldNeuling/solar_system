@@ -8,6 +8,7 @@ import {
 	DialogContent,
 	DialogTitle,
 } from "@mui/material";
+import { ZoomIn, ZoomOut, SkipNext } from "@mui/icons-material";
 
 export const UserInfoDialog = forwardRef((_, ref) => {
 	const [open, setOpen] = useState(false);
@@ -24,11 +25,12 @@ export const UserInfoDialog = forwardRef((_, ref) => {
 			<Dialog fullWidth open={open} onClose={handleClose}>
 				<DialogTitle sx={{ textDecoration: "underline" }}>Controls</DialogTitle>
 				<DialogContent>
-					[ENTER] - next planet
+					[ENTER] - <SkipNext />
+					(next Planet)
 					<br />
-					[W] - Zoom In
+					[W] - <ZoomIn />
 					<br />
-					[S] - Zoom Out
+					[S] - <ZoomOut />
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleClose}>Got it!</Button>
