@@ -19,6 +19,7 @@ export default function App() {
 	const { setUserTouch } = useContext(AnimationContext);
 	const dialogRef = useRef();
 	const [planetPointer, setPlanetPointer] = useState(0);
+	const sunColor = "0xfff5e1";
 
 	// *** HELPER *** -------------------------------------------------------------------
 	const handlePlanetSkip = () => {
@@ -44,11 +45,11 @@ export default function App() {
 		<>
 			<UserInfoDialog ref={dialogRef} />
 			<Canvas camera={{ position: [0, 0, 0] }}>
-				<ambientLight intensity={0.5} />
 				<UserController
 					skipPlanet={handlePlanetSkip}
 					planetRadius={Object.values(planetData)[planetPointer].r}
 				/>
+				<pointLight color={sunColor} intensity={1.5} decay={0} />
 
 				<BackgroundTexture />
 				{planets[planetPointer]}
