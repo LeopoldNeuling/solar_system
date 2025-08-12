@@ -9,7 +9,7 @@ import { AnimationContext } from "../provider/AnimationProvider";
 export default function UserController({ skipPlanet, planetRadius }) {
 	// *** DEFINITIONS *** --------------------------------------------------------------
 	const { camera } = useThree();
-	const { setRotateLeft, setRotateRight, setUserTouch } =
+	const { setRotateLeft, setRotateRight, setUserTouch, setCameraPosZ } =
 		useContext(AnimationContext);
 	const zoomIn = useRef(false);
 	const zoomOut = useRef(false);

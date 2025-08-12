@@ -5,6 +5,7 @@ import { useTexture } from "@react-three/drei";
 import { Canvas, useThree } from "@react-three/fiber";
 //components
 import UserController from "./userInteract/UserController";
+import PlanetDataDisplay from "./planets/PlanetDataDisplay";
 import { UserInfoDialog } from "./userInteract/userInfoDialog";
 import { AnimationContext } from "./provider/AnimationProvider";
 import { planets, planetData } from "./planets/PlanetDimensions";
@@ -19,7 +20,7 @@ export default function App() {
 	const { setUserTouch } = useContext(AnimationContext);
 	const dialogRef = useRef();
 	const [planetPointer, setPlanetPointer] = useState(0);
-	const sunColor = "0xfff5e1";
+	const sunColor = 0xfff5e1;
 
 	// *** HELPER *** -------------------------------------------------------------------
 	const handlePlanetSkip = () => {
@@ -53,6 +54,7 @@ export default function App() {
 
 				<BackgroundTexture />
 				{planets[planetPointer]}
+				<PlanetDataDisplay data={Object.values(planetData)[planetPointer]} />
 			</Canvas>
 		</>
 	);
