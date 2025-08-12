@@ -8,7 +8,7 @@ import PlanetDataDisplay from "./planets/PlanetDataDisplay";
 import BackgroundTexture from "./planets/BackgroundTexture";
 import { UserInfoDialog } from "./userInteract/userInfoDialog";
 import { AnimationContext } from "./provider/AnimationProvider";
-import { planets, planetData } from "./planets/PlanetDimensions";
+import { planets, planetData } from "./planets/PlanetDefinitions";
 import "./style.css";
 
 export const __displacementScale = 0.25;
