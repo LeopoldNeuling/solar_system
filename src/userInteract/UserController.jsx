@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 //components
 import { unsetPosZ } from "../App";
-import { AnimationContext } from "../AnimationProvider";
+import { AnimationContext } from "../provider/AnimationProvider";
 
 export default function UserController({ skipPlanet, planetRadius }) {
 	// *** DEFINITIONS *** --------------------------------------------------------------
@@ -18,20 +18,40 @@ export default function UserController({ skipPlanet, planetRadius }) {
 	const isTooNear = (pos2) => camera.position.z >= pos2;
 	const isTooFar = (pos2) => camera.position.z <= pos2;
 	const handleKeyDown = (e) => {
-		const lower = e.key.toLowerCase();
-		if (lower === "w") zoomIn.current = true;
-		else if (lower === "s") zoomOut.current = true;
-		else if (lower === "a") setRotateLeft(true);
-		else if (lower === "d") setRotateRight(true);
+		switch (e.key.toLowerCase()) {
+			case "w":
+				zoomIn.current = true;
+				break;
+			case "s":
+				zoomOut.current = true;
+				break;
+			case "a":
+				setRotateLeft(true);
+				break;
+			case "d":
+				setRotateRight(true);
+		}
 	};
 	const handleKeyUp = (e) => {
-		const lower = e.key.toLowerCase();
-		if (lower === "w") zoomIn.current = false;
-		else if (lower === "s") zoomOut.current = false;
-		else if (lower === "enter") skipPlanet();
-		else if (lower === "a") setRotateLeft(false);
-		else if (lower === "d") setRotateRight(false);
-		else if (lower === "r") setUserTouch(false);
+		switch (e.key.toLowerCase()) {
+			case "w":
+				zoomIn.current = false;
+				break;
+			case "s":
+				zoomOut.current = false;
+				break;
+			case "a":
+				setRotateLeft(false);
+				break;
+			case "d":
+				setRotateRight(false);
+				break;
+			case "enter":
+				skipPlanet();
+				break;
+			case "r":
+				setUserTouch(false);
+		}
 	};
 
 	// *** DEPENDENCIES *** -------------------------------------------------------------

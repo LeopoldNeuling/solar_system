@@ -19,17 +19,15 @@ import {
 
 export const UserInfoDialog = forwardRef((_, ref) => {
 	const [open, setOpen] = useState(false);
-	const handleClose = () => {
-		setOpen(false);
-	};
 
 	useImperativeHandle(ref, () => ({
 		openDialog: () => setOpen(true),
+		closeDialog: () => setOpen(false),
 	}));
 
 	return (
 		<Fragment>
-			<Dialog fullWidth open={open} onClose={handleClose}>
+			<Dialog fullWidth open={open} onClose={() => ref.current.closeDialog()}>
 				<DialogTitle sx={{ textDecoration: "underline" }}>Controls</DialogTitle>
 				<DialogContent className="controls">
 					<span>[ENTER]</span>
@@ -64,7 +62,7 @@ export const UserInfoDialog = forwardRef((_, ref) => {
 					</span>
 				</DialogContent>
 				<DialogActions>
-					<Button onClick={handleClose}>Got it!</Button>
+					<Button onClick={() => ref.current.closeDialog()}>Got it!</Button>
 				</DialogActions>
 			</Dialog>
 		</Fragment>

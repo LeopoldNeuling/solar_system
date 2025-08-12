@@ -12,7 +12,7 @@ import {
 } from "three";
 //components
 import { sphereSegments, unsetPosZ } from "../App";
-import { AnimationContext } from "../AnimationProvider";
+import { AnimationContext } from "../provider/AnimationProvider";
 
 export function PlanetSkeleton({
 	//group (planet + ring)
@@ -30,43 +30,30 @@ export function PlanetSkeleton({
 	ringAlphaMapPath,
 	ringOrientation = "horizontal",
 }) {
-	const planetTextures = {
-		color: colorMapPath,
-		bump: bumpMapPath,
-		specular: specularMapPath,
-		normal: normalMapPath,
-	};
-	const ringTextures = {
-		color: ringColorMapPath,
-		alpha: ringAlphaMapPath,
-	};
-
-	const axisTilt = new Vector3(
-		0,
-		MathUtils.degToRad(tilTAngleDeg),
-		0
-	).normalize();
-
-	const meshRef = useRef();
 	const { rotateLeft, rotateRight, userTouch, setUserTouch } =
 		useContext(AnimationContext);
+	const meshRef = useRef();
+	const axisTilt = new Vector3(0, MathUtils.degToRad(tilTAngleDeg), 0);
 
-	let angle; // radians per frame
-	const animationMultiplier = 5;
-
+	let angle;
+	let activeAngle = 0.05;
 	useFrame(() => {
 		angle = 0.01;
-		if (rotateLeft) {
-			angle *= -animationMultiplier;
-			setUserTouch(true);
-		} else if (rotateRight) {
-			angle *= animationMultiplier;
-			setUserTouch(true);
-		}
+		if (rotateLeft)
+			setUserTouch((_) => {
+				angle = -activeAngle;
+				return true;
+			});
+		else if (rotateRight)
+			setUserTouch((_) => {
+				angle = activeAngle;
+				return true;
+			});
+
 		if (userTouch && !rotateLeft && !rotateRight) return;
 		const q = new Quaternion();
-		q.setFromAxisAngle(axisTilt, angle);
-		meshRef.current.quaternion.multiply(q); // apply rotation
+		q.setFromAxisAngle(axisTilt.normalize(), angle);
+		meshRef.current.quaternion.multiply(q);
 	});
 
 	return (
@@ -76,14 +63,22 @@ export function PlanetSkeleton({
 			rotation={[0, 0.5, MathUtils.degToRad(tilTAngleDeg)]}
 		>
 			<PlanetConstructor
-				textures={planetTextures}
+				textures={{
+					color: colorMapPath,
+					bump: bumpMapPath,
+					specular: specularMapPath,
+					normal: normalMapPath,
+				}}
 				radius={radius}
 				displacementScale={displacementScale}
 			/>
 			{ringColorMapPath && (
 				<RingConstructor
 					parentRadius={radius}
-					textures={ringTextures}
+					textures={{
+						color: ringColorMapPath,
+						alpha: ringAlphaMapPath,
+					}}
 					orientation={ringOrientation}
 				/>
 			)}
