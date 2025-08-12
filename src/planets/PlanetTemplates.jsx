@@ -119,7 +119,7 @@ function RingConstructor({ parentRadius, textures, orientation }) {
 	const innerR = parentRadius * 1.2;
 	const outerR = parentRadius * 1.5;
 
-	const geometry = new RingGeometry(innerR, outerR, 64);
+	const geometry = new RingGeometry(innerR, outerR, 100);
 
 	const threshold = (innerR + outerR) / 2;
 	let pos = geometry.attributes.position;

@@ -12,7 +12,7 @@ import { planets, planetData } from "./planets/PlanetDefinitions";
 import "./style.css";
 
 export const __displacementScale = 0.25;
-export const sphereSegments = [64, 64];
+export const sphereSegments = [128, 128];
 export const unsetPosZ = -100;
 
 export default function App() {
