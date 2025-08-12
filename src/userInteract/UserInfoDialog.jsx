@@ -9,13 +9,7 @@ import {
 	DialogTitle,
 	Divider,
 } from "@mui/material";
-import {
-	ZoomIn,
-	ZoomOut,
-	SkipNext,
-	RotateLeft,
-	RotateRight,
-} from "@mui/icons-material";
+import { ZoomIn, ZoomOut, RotateLeft, RotateRight } from "@mui/icons-material";
 
 export const UserInfoDialog = forwardRef((_, ref) => {
 	const [open, setOpen] = useState(false);
@@ -32,7 +26,7 @@ export const UserInfoDialog = forwardRef((_, ref) => {
 				<DialogContent className="controls">
 					<span>[ENTER]</span>
 					<span>
-						<SkipNext /> <i>(Next Planet)</i>
+						<i>Next Planet</i>
 					</span>
 					<Divider className="divider" textAlign="center" sx={{ color: "divider" }}>
 						Zoom
@@ -48,17 +42,24 @@ export const UserInfoDialog = forwardRef((_, ref) => {
 					<Divider className="divider" textAlign="center" sx={{ color: "divider" }}>
 						Rotation <i>(stops animation for current Planet)</i>
 					</Divider>
-					<span>[A]</span>
+					<span>[Q]</span>
 					<span>
 						<RotateLeft />
 					</span>
-					<span>[D]</span>
+					<span>[E]</span>
 					<span>
 						<RotateRight />
 					</span>
 					<span>[R]</span>
 					<span>
 						<i>Start Animation (again)</i>
+					</span>
+					<Divider className="divider" textAlign="center" sx={{ color: "divider" }}>
+						Background
+					</Divider>
+					<span>[X]</span>
+					<span>
+						<i>Toggle Milky Way (on/off)</i>
 					</span>
 				</DialogContent>
 				<DialogActions>

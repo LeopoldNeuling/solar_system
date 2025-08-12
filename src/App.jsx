@@ -1,11 +1,11 @@
 //react
 import { useContext, useEffect, useRef, useState } from "react";
 //three.js
-import { useTexture } from "@react-three/drei";
-import { Canvas, useThree } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 //components
 import UserController from "./userInteract/UserController";
 import PlanetDataDisplay from "./planets/PlanetDataDisplay";
+import BackgroundTexture from "./planets/BackgroundTexture";
 import { UserInfoDialog } from "./userInteract/userInfoDialog";
 import { AnimationContext } from "./provider/AnimationProvider";
 import { planets, planetData } from "./planets/PlanetDimensions";
@@ -18,8 +18,9 @@ export const unsetPosZ = -100;
 export default function App() {
 	// *** DEFINITIONS *** --------------------------------------------------------------
 	const { setUserTouch } = useContext(AnimationContext);
-	const dialogRef = useRef();
 	const [planetPointer, setPlanetPointer] = useState(0);
+	const [bgTexture, setBgTexture] = useState("stars");
+	const dialogRef = useRef();
 	const sunColor = 0xfff5e1;
 
 	// *** HELPER *** -------------------------------------------------------------------
@@ -33,28 +34,23 @@ export default function App() {
 		dialogRef.current.openDialog();
 	}, []);
 
-	// *** LOWER COMPONENTS *** ---------------------------------------------------------
-	function BackgroundTexture() {
-		const { scene } = useThree();
-		const texture = useTexture("stars.jpg");
-		useEffect(() => {
-			scene.background = texture;
-		}, []);
-	}
-
 	return (
 		<>
 			<UserInfoDialog ref={dialogRef} />
 			<Canvas camera={{ position: [0, 0, 0] }}>
+				<pointLight color={sunColor} intensity={1.5} decay={0} />
+
+				<BackgroundTexture textureName={bgTexture} />
+				{planets[planetPointer]}
+				<PlanetDataDisplay data={Object.values(planetData)[planetPointer]} />
+
 				<UserController
 					skipPlanet={handlePlanetSkip}
 					planetRadius={Object.values(planetData)[planetPointer].r}
+					swapBg={() =>
+						setBgTexture((prev) => (prev === "stars" ? "milkyway" : "stars"))
+					}
 				/>
-				<pointLight color={sunColor} intensity={1.5} decay={0} />
-
-				<BackgroundTexture />
-				{planets[planetPointer]}
-				<PlanetDataDisplay data={Object.values(planetData)[planetPointer]} />
 			</Canvas>
 		</>
 	);

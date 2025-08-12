@@ -6,7 +6,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { unsetPosZ } from "../App";
 import { AnimationContext } from "../provider/AnimationProvider";
 
-export default function UserController({ skipPlanet, planetRadius }) {
+export default function UserController({ skipPlanet, planetRadius, swapBg }) {
 	// *** DEFINITIONS *** --------------------------------------------------------------
 	const { camera } = useThree();
 	const { setRotateLeft, setRotateRight, setUserTouch, setCameraPosZ } =
@@ -25,10 +25,10 @@ export default function UserController({ skipPlanet, planetRadius }) {
 			case "s":
 				zoomOut.current = true;
 				break;
-			case "a":
+			case "q":
 				setRotateLeft(true);
 				break;
-			case "d":
+			case "e":
 				setRotateRight(true);
 		}
 	};
@@ -40,10 +40,10 @@ export default function UserController({ skipPlanet, planetRadius }) {
 			case "s":
 				zoomOut.current = false;
 				break;
-			case "a":
+			case "q":
 				setRotateLeft(false);
 				break;
-			case "d":
+			case "e":
 				setRotateRight(false);
 				break;
 			case "enter":
@@ -51,6 +51,9 @@ export default function UserController({ skipPlanet, planetRadius }) {
 				break;
 			case "r":
 				setUserTouch(false);
+				break;
+			case "x":
+				swapBg();
 		}
 	};
 
